@@ -1,19 +1,29 @@
 package com.contabilizei.teste;
 
-import java.util.List;
+import com.contabilizei.teste.order.model.Order;
+import com.contabilizei.teste.ordercontroller.OrderController;
+import com.contabilizei.teste.orderitem.model.OrderItem;
 
-import com.contabilizei.teste.customer.controller.CustomerController;
-import com.contabilizei.teste.customer.model.Customer;
 
 public class Test {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-			CustomerController controller = new CustomerController();
+			/*CustomerController controller = new CustomerController();
 			List<Customer> customer = controller.findAll();
 			
-			System.out.println(customer.size());
+			System.out.println(customer.size());*/
+		
+		/*ProductController controller = new ProductController();
+		List<Product> product = controller.findAll();
+		
+		System.out.println(product);*/
+		
+		OrderController controller = new OrderController();
+		Order product = controller.findById(1);
+		
+		System.out.println(product);
 		
 		/*EntityManagerFactory emf = Persistence.createEntityManagerFactory("Cliente");
 		

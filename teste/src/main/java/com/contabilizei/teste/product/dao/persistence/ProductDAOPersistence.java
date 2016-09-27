@@ -1,16 +1,12 @@
 package com.contabilizei.teste.product.dao.persistence;
 
-import javax.annotation.PostConstruct;
-import javax.persistence.EntityTransaction;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import java.util.List;
 
+import javax.annotation.PostConstruct;
+
+import com.contabilizei.teste.customer.model.Customer;
 import com.contabilizei.teste.product.dao.ProductDAO;
 import com.contabilizei.teste.product.model.Product;
-import com.contabilizei.teste.product.model.Product_;
 import com.contabilizei.teste.services.impl.CRUDServiceImpl;
 
 public class ProductDAOPersistence extends CRUDServiceImpl<Product, Integer> implements ProductDAO {
@@ -27,18 +23,27 @@ public class ProductDAOPersistence extends CRUDServiceImpl<Product, Integer> imp
 	
 	@Override
 	public Product findById(Integer id) {
-		
-		EntityTransaction tx = em.getTransaction();
-		tx.begin();
-		
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<Product> cq = cb.createQuery(Product.class);
-		Root<Product> root = cq.from(Product.class);
-		Predicate predicate = cb.equal(root.get(Product_.id), id);
-		cq.where(predicate);
-		TypedQuery<Product> query = em.createQuery(cq);
-		return query.getResultList().size() > 0 ? query.getSingleResult() : null;
+		return super.findById(id);
 	}
 	
-
+	@Override
+	public List<Product> findAll() {
+		return super.findAll();
+	}
+	
+	@Override
+	public void create(Product e) {
+		super.create(e);
+	}
+	
+	@Override
+	public Product update(Product e) {
+		return super.update(e);
+	}
+	
+	@Override
+	public void delete(Integer id) {
+		super.delete(id);
+	}	
+	
 }

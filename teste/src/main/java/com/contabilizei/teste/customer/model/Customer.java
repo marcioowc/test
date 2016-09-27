@@ -17,15 +17,15 @@ public class Customer implements Serializable{
 	
 	@Id
 	@Column(name="id",unique=true,nullable=false)
-	@GeneratedValue(strategy = GenerationType.AUTO) 
+	@GeneratedValue(strategy = GenerationType.IDENTITY) 
 	private Integer id;
 	
 	@Column(name="nome")
 	private String name;
 	
 	@Column(name="id_federac")
-	private Integer idFederac;
-	
+	private String idFederac;
+
 	public Integer getId() {
 		return id;
 	}
@@ -42,12 +42,54 @@ public class Customer implements Serializable{
 		this.name = name;
 	}
 
-	public Integer getIdFederac() {
+	public String getIdFederac() {
 		return idFederac;
 	}
 
-	public void setIdFederac(Integer idFederac) {
+	public void setIdFederac(String idFederac) {
 		this.idFederac = idFederac;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((idFederac == null) ? 0 : idFederac.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Customer other = (Customer) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (idFederac == null) {
+			if (other.idFederac != null)
+				return false;
+		} else if (!idFederac.equals(other.idFederac))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Customer [id=" + id + ", name=" + name + ", idFederac=" + idFederac + "]";
 	}
 	
 }

@@ -3,8 +3,6 @@ package com.contabilizei.teste.customer.dao;
 import java.util.List;
 
 import com.contabilizei.teste.customer.model.Customer;
-import com.contabilizei.teste.product.dao.persistence.ProductDAOPersistence;
-import com.contabilizei.teste.product.model.Product;
 import com.contabilizei.teste.services.CRUDService;
 
 public interface CustomerDAO extends CRUDService<Customer, Integer>{
