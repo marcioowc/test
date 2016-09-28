@@ -1,4 +1,4 @@
-package com.contabilizei.teste.customer.rest;
+package com.contabilizei.teste.product.rest;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -11,46 +11,46 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.contabilizei.teste.customer.controller.CustomerController;
-import com.contabilizei.teste.customer.model.Customer;
+import com.contabilizei.teste.product.controller.ProductController;
+import com.contabilizei.teste.product.model.Product;
 import com.contabilizei.teste.rest.RestResponse;
 
-@Path("/customers")
-public class CustomerRest {
+@Path("/products")
+public class ProductRest {
 	
-	private CustomerController controller = new CustomerController();
+	private ProductController controller = new ProductController();
 	
 	@GET
-	@Path("/getCustomer/{customer}")
+	@Path("/getProduct/{product}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getCustomer(@PathParam("customer") Integer id ){
+	public Response getProduct(@PathParam("product") Integer id ){
 		return Response.ok(new RestResponse(this.controller.findById(id))).build(); 
 	}
 	
 	@GET
-	@Path("/getAllCustomers")
+	@Path("/getAllProducts")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAllCustomers(){
+	public Response getAllProduct(){
 		return Response.ok(new RestResponse(this.controller.findAll())).build(); 
 	}
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response save(Customer customer){
-		this.controller.create(customer);
-		return Response.ok("Contato salvo com sucesso").type(MediaType.TEXT_PLAIN).build();
+	public Response save(Product product){
+		this.controller.create(product);
+		return Response.ok("Produto salvo com sucesso").type(MediaType.TEXT_PLAIN).build();
 	}
 	
 	@PUT
 	@Produces(MediaType.TEXT_PLAIN)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response update(Customer customer){
-		Customer customerReturn = this.controller.update(customer);
-		return Response.ok(customerReturn.getName() + " atualizado!").build();
+	public Response update(Product product){
+		Product productReturn = this.controller.update(product);
+		return Response.ok(productReturn.getName() + " atualizado!").build();
 	}
 	
 	@DELETE
-	@Path("/deleteCustomer/{id}")
+	@Path("/deleteProduct/{id}")
 	public Response delete (@PathParam("id") int id){
 		this.controller.delete(id);
 		return Response.ok("Cliente Excluido").build();

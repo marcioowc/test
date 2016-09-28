@@ -25,7 +25,7 @@ public class Customer implements Serializable{
 	
 	@Column(name="id_federac")
 	private String idFederac;
-
+	
 	public Integer getId() {
 		return id;
 	}

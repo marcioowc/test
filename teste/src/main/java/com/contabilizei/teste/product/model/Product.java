@@ -24,7 +24,7 @@ public class Product implements Serializable{
 	private String name;
 	
 	@Column(name="val_unitario")
-	private Double value;
+	private Double price;
 
 	public Integer getId() {
 		return id;
@@ -42,12 +42,12 @@ public class Product implements Serializable{
 		this.name = name;
 	}
 
-	public Double getValue() {
-		return value;
+	public Double getPrice() {
+		return price;
 	}
 
-	public void setValue(Double value) {
-		this.value = value;
+	public void setPrice(Double price) {
+		this.price = price;
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class Product implements Serializable{
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((value == null) ? 0 : value.hashCode());
+		result = prime * result + ((price == null) ? 0 : price.hashCode());
 		return result;
 	}
 
@@ -79,17 +79,16 @@ public class Product implements Serializable{
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
-		if (value == null) {
-			if (other.value != null)
+		if (price == null) {
+			if (other.price != null)
 				return false;
-		} else if (!value.equals(other.value))
+		} else if (!price.equals(other.price))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Product [id=" + id + ", name=" + name + ", value=" + value + "]";
+		return "Product [id=" + id + ", name=" + name + ", price=" + price + "]";
 	}
-	
 }

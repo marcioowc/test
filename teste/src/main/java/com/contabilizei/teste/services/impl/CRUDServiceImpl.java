@@ -54,7 +54,7 @@ public abstract class CRUDServiceImpl<E, ID> implements CRUDService<E, ID>{
 	public void delete(ID id) {
 		try{
 			tx.begin();
-			E e = findById(id);
+			E e = findForDelete(id);
 			em.remove(e);
 			tx.commit();
 		}finally{
@@ -80,6 +80,11 @@ public abstract class CRUDServiceImpl<E, ID> implements CRUDService<E, ID>{
 		}finally{
 			em.close();
 		}
+	}
+	
+	@Override
+	public E findForDelete(ID id) {
+		return em.find(entityClass, id);
 	}
 	
 }

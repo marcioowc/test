@@ -3,15 +3,9 @@ package com.contabilizei.teste.customer.dao.persistence;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 
 import com.contabilizei.teste.customer.dao.CustomerDAO;
 import com.contabilizei.teste.customer.model.Customer;
-import com.contabilizei.teste.customer.model.Customer_;
 import com.contabilizei.teste.services.impl.CRUDServiceImpl;
 
 public class CustomerDAOPersistence extends CRUDServiceImpl<Customer, Integer> implements CustomerDAO {
@@ -49,6 +43,11 @@ public class CustomerDAOPersistence extends CRUDServiceImpl<Customer, Integer> i
 	@Override
 	public void delete(Integer id) {
 		super.delete(id);
-	}	
+	}
+	
+	@Override
+	public Customer findForDelete(Integer id) {
+		return super.findForDelete(id);
+	}
 	
 }

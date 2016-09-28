@@ -44,6 +44,11 @@ public class ProductDAOPersistence extends CRUDServiceImpl<Product, Integer> imp
 	@Override
 	public void delete(Integer id) {
 		super.delete(id);
-	}	
+	}
+	
+	@Override
+	public Product findForDelete(Integer id) {
+		return super.findForDelete(id);
+	}
 	
 }
