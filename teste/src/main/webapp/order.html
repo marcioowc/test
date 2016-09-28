@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script type="text/javascript" src="js/lib/angular/angular.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body ng-controller="orderController">
+	<div id="dvTable">
+		<table id="table-1" border="1" cellpadding="2" cellspacing="2">
+			<tr>
+				<th>ID</th>
+				<th>Cliente</th>
+				<th>Data</th>
+				<th>Valor</th>
+				<th></th>
+			</tr>
+			<tr ng-repeat="order in result">
+				<td>{{order.id}}</td>
+				<td>{{order.customer.name}}</td>
+				<td>{{order.date}}</td>
+				<td>{{order.amount}}</td>
+				<td>
+					<a href="#" ng-click="del(order.id)">Delete</a>
+					<a href="#" ng-click="edit(order)">Edit</a>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<br/>
+	<div id="dvInformation">
+		<fieldset>
+			<legend>Informações do Pedido</legend>
+			<table id="table-1" cellpadding="2" cellspacing="2">
+				<tr>
+					<td>Cliente</td>
+					<td><input type="text" ng-model="order.customer.name"></td>
+				</tr>
+				<tr>
+					<td>Data</td>
+					<td><input type="text" ng-model="order.date"></td>
+				</tr>
+				<tr>
+					<td>Valor</td>
+					<td><input type="text" ng-model="order.amount"></td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>
+						<input type="button" value="Adicionar" ng-click="add()">
+						<input type="button" value="Atualizar" ng-click="update()">
+					</td>
+				</tr>
+			</table>
+		</fieldset>
+	</div>
+	<script type="text/javascript">
+		var myapp = angular.module('myapp', []);
+			myapp.controller('orderController', function($scope, $http){
+				$scope.base_url = 'http://localhost:8080/teste/rest/orders/';
+				$http.get($scope.base_url + 'getAllOrders').success(function(response){
+					$scope.result = response.data;
+			});
+
+			$scope.add = function(){
+				$http.post($scope.base_url, $scope.order).success(function(response){
+					$http.get($scope.base_url + 'getAllOrders').success(function(response){
+						$scope.result = response.data;
+					});
+				});
+			};
+
+			$scope.del = function(id){
+				var result = confirm('Tem certeza que deseja deletar o registro?');
+				if(result == true){
+					$http.delete($scope.base_url + 'deleteOrder/' + id).success(function(response){
+						$http.get($scope.base_url + 'getAllOrders').success(function(response){
+							$scope.result = response.data;
+						});
+					});
+				}				
+			};
+
+			$scope.edit = function(order){
+				$scope.order = order;
+				
+			};
+
+			$scope.update = function(){
+				$http.put($scope.base_url, $scope.order).success(function(response){
+					$http.get($scope.base_url + 'getAllOrders').success(function(response){
+						$scope.result = response.data;
+					});
+				});
+			};
+		});
+	</script>
+
+</body>
+</html>

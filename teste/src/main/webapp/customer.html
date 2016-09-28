@@ -3,47 +3,56 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="js/lib/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="js/lib/bootstrap/dist/css/bootstrap-theme.min.css">
 <script type="text/javascript" src="js/lib/angular/angular.min.js"></script>
+
 </head>
 <body ng-controller="customerController">
-	<table id="table-1" border="1" cellpadding="2" cellspacing="2">
-			<tr>
-				<th>ID</th>
-				<th>CPF/CNPJ</th>
-				<th>Nome</th>
-				<th></th>
-			</tr>
-			<tr ng-repeat="customer in result">
-				<td>{{customer.id}}</td>
-				<td>{{customer.idFederac}}</td>
-				<td>{{customer.name}}</td>
-				<td>
-					<a href="#" ng-click="del(customer.id)">Delete</a>
-					<a href="#" ng-click="edit(customer)">Edit</a>
-				</td>
-			</tr>
-	</table>
+
+	<legend>Clientes</legend>
+
+	<div id=dvTable all>
+		<table class="table">
+				<tr>
+					<th>ID</th>
+					<th>CPF/CNPJ</th>
+					<th>Nome</th>
+					<th></th>
+				</tr>
+				<tr ng-repeat="customer in result">
+					<td>{{customer.id}}</td>
+					<td>{{customer.idFederac}}</td>
+					<td>{{customer.name}}</td>
+					<td>
+						<a href="#" ng-click="del(customer.id)">Delete</a>
+						<a href="#" ng-click="edit(customer)">Edit</a>
+					</td>
+				</tr>
+		</table>
+	</div>
 	<br/>
-	<fieldset>
-		<legend>Informações do Cliente</legend>
-		<table id="table-1" cellpadding="2" cellspacing="2">
-			<tr>
-				<td>CPF/CNPJ</td>
-				<td><input type="text" ng-model="customer.idFederac"></td>
-			</tr>
-			<tr>
-				<td>Nome</td>
-				<td><input type="text" ng-model="customer.name"></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
+	<div id="dvInformation">
+		<fieldset>
+			<legend>Informações do Cliente</legend>
+			<div class="fomr-group col-sm-4">
+				<label class="control-label" for="tiIdFederac">CPF/CNPJ</label>
+				<input id="tiIdFederac" type="text" ng-model="customer.idFederac" class="form-control">
+				
+				<br>
+				
+				<label class="control-label" for="tiName">Nome</label>
+				<input id="tiName" type="text" ng-model="customer.name" class="form-control">
+				
+				<br>
 				<td>
 					<input type="button" value="Adicionar" ng-click="add()">
 					<input type="button" value="Atualizar" ng-click="update()">
 				</td>
-			</tr>
-		</table>
-	</fieldset>
+				
+			</div>
+		</fieldset>
+	</div>
 	<script type="text/javascript">
 		var myapp = angular.module('myapp', []);
 		myapp.controller('customerController', function($scope, $http){

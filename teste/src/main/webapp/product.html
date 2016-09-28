@@ -4,46 +4,51 @@
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 <script type="text/javascript" src="js/lib/angular/angular.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body ng-controller="productController">
-	<table id="table-1" border="1" cellpadding="2" cellspacing="2">
-		<tr>
-			<th>ID</th>
-			<th>Nome</th>
-			<th>Preço</th>
-			<th></th>
-		</tr>
-		<tr ng-repeat="product in result">
-			<td>{{product.id}}</td>
-			<td>{{product.name}}</td>
-			<td>{{product.price}}</td>
-			<td>
-				<a href="#" ng-click="del(product.id)">Delete</a>
-				<a href="#" ng-click="edit(product)">Edit</a>
-			</td>
-		</tr>
-	</table>
-	<br/>
-	<fieldset>
-		<legend>Informações do Produto</legend>
-		<table id="table-1" cellpadding="2" cellspacing="2">
+	<div id="dvTable">
+		<table id="table-1" border="1" cellpadding="2" cellspacing="2">
 			<tr>
-				<td>Nome</td>
-				<td><input type="text" ng-model="product.name"></td>
+				<th>ID</th>
+				<th>Nome</th>
+				<th>Preço</th>
+				<th></th>
 			</tr>
-			<tr>
-				<td>Preço</td>
-				<td><input type="text" ng-model="product.price"></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
+			<tr ng-repeat="product in result">
+				<td>{{product.id}}</td>
+				<td>{{product.name}}</td>
+				<td>{{product.price}}</td>
 				<td>
-					<input type="button" value="Adicionar" ng-click="add()">
-					<input type="button" value="Atualizar" ng-click="update()">
+					<a href="#" ng-click="del(product.id)">Delete</a>
+					<a href="#" ng-click="edit(product)">Edit</a>
 				</td>
 			</tr>
 		</table>
-	</fieldset>
+	</div>
+	<br/>
+	<div id="dvInformation">
+		<fieldset>
+			<legend>Informações do Produto</legend>
+			<table id="table-1" cellpadding="2" cellspacing="2">
+				<tr>
+					<td>Nome</td>
+					<td><input type="text" ng-model="product.name"></td>
+				</tr>
+				<tr>
+					<td>Preço</td>
+					<td><input type="text" ng-model="product.price"></td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>
+						<input type="button" value="Adicionar" ng-click="add()">
+						<input type="button" value="Atualizar" ng-click="update()">
+					</td>
+				</tr>
+			</table>
+		</fieldset>
+	</div>
 	<script type="text/javascript">
 		var myapp = angular.module('myapp', []);
 		myapp.controller('productController', function($scope, $http){

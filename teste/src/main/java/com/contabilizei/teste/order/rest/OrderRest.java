@@ -13,8 +13,9 @@ import javax.ws.rs.core.Response;
 
 import com.contabilizei.teste.order.model.Order;
 import com.contabilizei.teste.ordercontroller.OrderController;
+import com.contabilizei.teste.rest.RestResponse;
 
-@Path("/order")
+@Path("/orders")
 public class OrderRest {
 	
 	private OrderController controller = new OrderController();
@@ -23,14 +24,14 @@ public class OrderRest {
 	@Path("/getOrder/{order}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getOrder(@PathParam("order") Integer id ){
-		return Response.ok(this.controller.findById(id)).build(); 
+		return Response.ok(new RestResponse(this.controller.findById(id))).build(); 
 	}
 	
 	@GET
-	@Path("/getAllOrder")
+	@Path("/getAllOrders")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAllOrder(){
-		return Response.ok(this.controller.findAll()).build(); 
+	public Response getAllOrders(){
+		return Response.ok(new RestResponse(this.controller.findAll())).build(); 
 	}
 	
 	@POST

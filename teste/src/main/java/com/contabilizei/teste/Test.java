@@ -1,8 +1,9 @@
 package com.contabilizei.teste;
 
+import java.util.List;
+
 import com.contabilizei.teste.order.model.Order;
 import com.contabilizei.teste.ordercontroller.OrderController;
-import com.contabilizei.teste.orderitem.model.OrderItem;
 
 
 public class Test {
@@ -21,9 +22,9 @@ public class Test {
 		System.out.println(product);*/
 		
 		OrderController controller = new OrderController();
-		Order product = controller.findById(1);
+		List<Order> order = controller.findAll();
 		
-		System.out.println(product);
+		System.out.println(order);
 		
 		/*EntityManagerFactory emf = Persistence.createEntityManagerFactory("Cliente");
 		

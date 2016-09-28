@@ -12,14 +12,13 @@ import com.contabilizei.teste.services.CRUDService;
 
 public abstract class CRUDServiceImpl<E, ID> implements CRUDService<E, ID>{
 	
-	@PersistenceContext
 	protected EntityManagerFactory emf; 
 	protected EntityManager em; 
 	protected Class<E> entityClass;
 	protected EntityTransaction tx;
 	
 	public CRUDServiceImpl(Class className){
-		this.emf = Persistence.createEntityManagerFactory(className.getSimpleName());
+		this.emf = Persistence.createEntityManagerFactory("PersistenceUnit");
 		this.em  = emf.createEntityManager();
 		this.tx = em.getTransaction();
 		this.entityClass = className;

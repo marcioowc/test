@@ -2,6 +2,7 @@ package com.contabilizei.teste.orderitem.model;
 
 import java.io.Serializable;
 
+import javax.jms.JMSSessionMode;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +15,7 @@ import javax.persistence.Table;
 
 import com.contabilizei.teste.order.model.Order;
 import com.contabilizei.teste.product.model.Product;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="item_pedido")
@@ -31,6 +33,7 @@ public class OrderItem implements Serializable{
 	
 	@ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="id_pedido")
+	@JsonIgnore
 	private Order order;
 	
 	@ManyToOne(cascade=CascadeType.ALL)

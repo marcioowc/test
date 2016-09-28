@@ -85,6 +85,14 @@ public class Order implements Serializable{
 	public void setAmount(Double amount) {
 		this.amount = amount;
 	}
+	
+	public Set<OrderItem> getOrderItem() {
+		return orderItem;
+	}
+
+	public void setOrderItem(Set<OrderItem> orderItem) {
+		this.orderItem = orderItem;
+	}
 
 	@Override
 	public int hashCode() {
@@ -141,12 +149,4 @@ public class Order implements Serializable{
 				+ ", amount=" + amount + ", orderItem=" + getOrderItem() + "]";
 	}
 
-	public Set<OrderItem> getOrderItem() {
-		return orderItem;
-	}
-
-	public void setOrderItem(Set<OrderItem> orderItem) {
-		this.orderItem = orderItem;
-	}
-	
 }
