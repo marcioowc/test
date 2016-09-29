@@ -13,10 +13,11 @@ import javax.ws.rs.core.Response;
 
 import com.contabilizei.teste.order.model.Order;
 import com.contabilizei.teste.ordercontroller.OrderController;
+import com.contabilizei.teste.rest.AbstractRest;
 import com.contabilizei.teste.rest.RestResponse;
 
 @Path("/orders")
-public class OrderRest {
+public class OrderRest extends AbstractRest {
 	
 	private OrderController controller = new OrderController();
 	
@@ -31,7 +32,7 @@ public class OrderRest {
 	@Path("/getAllOrders")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllOrders(){
-		return Response.ok(new RestResponse(this.controller.findAll())).build(); 
+		return buildResponse(this.controller.findAll()); 
 	}
 	
 	@POST

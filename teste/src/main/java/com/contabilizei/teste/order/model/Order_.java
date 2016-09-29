@@ -8,13 +8,13 @@ import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="Dali", date="2016-09-28T14:35:31.814-0300")
+@Generated(value="Dali", date="2016-09-29T08:47:54.771-0300")
 @StaticMetamodel(Order.class)
 public class Order_ {
-	public static volatile SingularAttribute<Order, Integer> id;
 	public static volatile SingularAttribute<Order, Integer> customerId;
 	public static volatile SingularAttribute<Order, Date> date;
 	public static volatile SingularAttribute<Order, Customer> customer;
 	public static volatile SingularAttribute<Order, Double> amount;
 	public static volatile SetAttribute<Order, OrderItem> orderItem;
+	public static volatile SingularAttribute<Order, Integer> id;
 }

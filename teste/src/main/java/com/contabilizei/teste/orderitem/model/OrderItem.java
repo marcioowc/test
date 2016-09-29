@@ -1,54 +1,72 @@
 package com.contabilizei.teste.orderitem.model;
 
-import java.io.Serializable;
-
-import javax.jms.JMSSessionMode;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.contabilizei.teste.order.model.Order;
 import com.contabilizei.teste.product.model.Product;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name="item_pedido")
-public class OrderItem implements Serializable{
+@IdClass(OrderItemPK.class)
+public class OrderItem{
 	
-	private static final long serialVersionUID = 1L;
-	
+
 	@Id
-	@Column(name="id")
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Integer id;
-	
-	@Column(name="id_pedido",insertable=false,updatable=false)
+	@Column(name="id_pedido")
 	private Integer orderId;
 	
-	@ManyToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="id_pedido")
-	@JsonIgnore
+	@Id
+	@Column(name="id_produto")
+	private Integer productId;
+	
+	@JsonBackReference	
+	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL)    	
+	@JoinColumn(name="id_pedido",insertable=false,updatable=false)
 	private Order order;
 	
-	@ManyToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="id_produto")
+	@ManyToOne
+    @JoinColumn(name="id_produto",insertable=false,updatable=false)
 	private Product product;
 	
 	@Column(name="quantidade")
 	private Double quantity;
-
-	public Integer getId() {
-		return id;
+	
+	public OrderItem() {
+		super();
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public OrderItem(Integer orderId, Integer productId, Order order, Product product, Double quantity) {
+		super();
+		this.orderId = orderId;
+		this.productId = productId;
+		this.order = order;
+		this.product = product;
+		this.quantity = quantity;
+	}
+
+	public Integer getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(Integer orderId) {
+		this.orderId = orderId;
+	}
+
+	public Integer getProductId() {
+		return productId;
+	}
+
+	public void setProductId(Integer productId) {
+		this.productId = productId;
 	}
 
 	public Order getOrder() {
@@ -79,9 +97,10 @@ public class OrderItem implements Serializable{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((order == null) ? 0 : order.hashCode());
+		result = prime * result + ((orderId == null) ? 0 : orderId.hashCode());
 		result = prime * result + ((product == null) ? 0 : product.hashCode());
+		result = prime * result + ((productId == null) ? 0 : productId.hashCode());
 		result = prime * result + ((quantity == null) ? 0 : quantity.hashCode());
 		return result;
 	}
@@ -95,20 +114,25 @@ public class OrderItem implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		OrderItem other = (OrderItem) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
 		if (order == null) {
 			if (other.order != null)
 				return false;
 		} else if (!order.equals(other.order))
 			return false;
+		if (orderId == null) {
+			if (other.orderId != null)
+				return false;
+		} else if (!orderId.equals(other.orderId))
+			return false;
 		if (product == null) {
 			if (other.product != null)
 				return false;
 		} else if (!product.equals(other.product))
+			return false;
+		if (productId == null) {
+			if (other.productId != null)
+				return false;
+		} else if (!productId.equals(other.productId))
 			return false;
 		if (quantity == null) {
 			if (other.quantity != null)
@@ -120,7 +144,7 @@ public class OrderItem implements Serializable{
 
 	@Override
 	public String toString() {
-		return "OrderItem [id=" + id + ", orderId=" + orderId + ", product=" + product + ", quantity=" + quantity + "]";
+		return "OrderItem [orderId=" + orderId + ", productId=" + productId + ", quantity=" + quantity + "]";
 	}
-	
+
 }

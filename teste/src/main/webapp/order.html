@@ -3,12 +3,16 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="js/lib/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="js/lib/bootstrap/dist/css/bootstrap-theme.min.css">
 <script type="text/javascript" src="js/lib/angular/angular.min.js"></script>
-<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body ng-controller="orderController">
-	<div id="dvTable">
-		<table id="table-1" border="1" cellpadding="2" cellspacing="2">
+	<div id="dvTable" all>
+	
+	<legend>Pedido</legend>
+	<br>
+		<table class="table">
 			<tr>
 				<th>ID</th>
 				<th>Cliente</th>
@@ -32,38 +36,86 @@
 	<div id="dvInformation">
 		<fieldset>
 			<legend>Informações do Pedido</legend>
-			<table id="table-1" cellpadding="2" cellspacing="2">
-				<tr>
-					<td>Cliente</td>
-					<td><input type="text" ng-model="order.customer.name"></td>
-				</tr>
-				<tr>
-					<td>Data</td>
-					<td><input type="text" ng-model="order.date"></td>
-				</tr>
-				<tr>
-					<td>Valor</td>
-					<td><input type="text" ng-model="order.amount"></td>
-				</tr>
-				<tr>
-					<td>&nbsp;</td>
-					<td>
-						<input type="button" value="Adicionar" ng-click="add()">
-						<input type="button" value="Atualizar" ng-click="update()">
-					</td>
-				</tr>
-			</table>
+			<div class="fomr-group col-sm-4">
+				<label class="control-label" for="tiClient">Cliente</label>
+				<div ng-controller="informController">
+					<select name="" id="tiClient" ng-model="customer_selected" ng-options="customer.name for customer in customers track by customer.id" class="form-control">
+						<option value="">Selecione um Cliente</option>
+					</select>
+				</div>
+				
+				<br>
+				
+				<label class="control-label" for="tiDate">Data</label>
+				<input id="tiDate" type="text" ng-model="order.date" class="form-control">
+				
+				<br>
+				
+				<label class="control-label" for="tiAmount">Total</label>
+				<input id="tiAmount" type="text" ng-model="order.amount" disabled class="form-control">
+				
+				<br>
+				
+				<td>
+					<input type="button" value="Adicionar" ng-click="add()">
+					<input type="button" value="Atualizar" ng-click="update()">
+				</td>
+			</div>
 		</fieldset>
 	</div>
+	<br><br>
+	<div id="dvTable" all>
+		<table class="table">
+			<tr>
+				<th>Pedido</th>
+				<th>Produto</th>
+				<th>Preçco</th>
+				<th>Quantidade</th>
+				<th></th>
+			</tr>
+			<tr ng-repeat="orderItem in itens">
+				<td>{{orderItem.orderId}}</td>
+				<td>{{orderItem.product.name}}</td>
+				<td>{{orderItem.product.price}}</td>
+				<td>{{orderItem.quantity}}</td>
+				<td>
+					<a href="#" ng-click="del(order.id)">Delete</a>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<br/>
+	<div id="dvOrderItem">
+		<fieldset>
+			<legend>Informações dos Itens</legend>
+			<div class="fomr-group col-sm-4">
+				<label class="control-label" for="tiAmount">Quantidade</label>
+				<input id="tiAmount" type="text" ng-model="order.orderitem.quantity" class="form-control">
+			</div>
+		</fieldset>
+	</div>
+		
 	<script type="text/javascript">
-		var myapp = angular.module('myapp', []);
+
+			var myapp = angular.module('myapp', []);
+
+			myapp.controller('informController',function($scope, $http){
+				$scope.base_url = 'http://localhost:8080/teste/rest/customers/';
+				$http.get($scope.base_url + 'getAllCustomers').success(function(response){
+					$scope.customers = response.data;
+				});
+			});
+	
+		
 			myapp.controller('orderController', function($scope, $http){
 				$scope.base_url = 'http://localhost:8080/teste/rest/orders/';
 				$http.get($scope.base_url + 'getAllOrders').success(function(response){
 					$scope.result = response.data;
+					$scope.itens = response.data.orderitem; 
 			});
 
 			$scope.add = function(){
+				//$scope.order.customerId = $scope.customer_selected;
 				$http.post($scope.base_url, $scope.order).success(function(response){
 					$http.get($scope.base_url + 'getAllOrders').success(function(response){
 						$scope.result = response.data;
@@ -84,7 +136,8 @@
 
 			$scope.edit = function(order){
 				$scope.order = order;
-				
+				$scope.customer_selected = $scope.order.customer;
+				$scope.itens = order.orderItem;
 			};
 
 			$scope.update = function(){

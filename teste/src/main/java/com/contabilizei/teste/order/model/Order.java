@@ -2,12 +2,12 @@ package com.contabilizei.teste.order.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,6 +18,7 @@ import javax.persistence.Table;
 
 import com.contabilizei.teste.customer.model.Customer;
 import com.contabilizei.teste.orderitem.model.OrderItem;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name="pedido")
@@ -43,8 +44,9 @@ public class Order implements Serializable{
 	@Column(name="total")
 	private Double amount;
 	
-	@OneToMany(mappedBy="order", cascade=CascadeType.ALL)
-	private Set<OrderItem> orderItem = new HashSet<OrderItem>();
+	@JsonManagedReference
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="order", cascade=CascadeType.ALL)
+	private Set<OrderItem> orderItem;
 
 	public Integer getId() {
 		return id;
@@ -146,7 +148,7 @@ public class Order implements Serializable{
 	@Override
 	public String toString() {
 		return "Order [id=" + id + ", customerId=" + customerId + ", date=" + date + ", customer=" + customer
-				+ ", amount=" + amount + ", orderItem=" + getOrderItem() + "]";
+				+ ", amount=" + amount + ", orderItem=" + orderItem + "]";
 	}
 
 }
