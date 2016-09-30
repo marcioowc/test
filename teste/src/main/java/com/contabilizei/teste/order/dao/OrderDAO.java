@@ -2,7 +2,6 @@ package com.contabilizei.teste.order.dao;
 
 import java.util.List;
 
-import com.contabilizei.teste.customer.model.Customer;
 import com.contabilizei.teste.order.model.Order;
 import com.contabilizei.teste.services.CRUDService;
 

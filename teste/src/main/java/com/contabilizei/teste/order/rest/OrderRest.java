@@ -13,6 +13,7 @@ import javax.ws.rs.core.Response;
 
 import com.contabilizei.teste.order.model.Order;
 import com.contabilizei.teste.ordercontroller.OrderController;
+import com.contabilizei.teste.orderitem.controller.OrderItemController;
 import com.contabilizei.teste.rest.AbstractRest;
 import com.contabilizei.teste.rest.RestResponse;
 
@@ -20,6 +21,7 @@ import com.contabilizei.teste.rest.RestResponse;
 public class OrderRest extends AbstractRest {
 	
 	private OrderController controller = new OrderController();
+	private OrderItemController controllerItem = new OrderItemController();
 	
 	@GET
 	@Path("/getOrder/{order}")
@@ -54,6 +56,14 @@ public class OrderRest extends AbstractRest {
 	@Path("/deleteOrder/{id}")
 	public Response delete (@PathParam("id") int id){
 		this.controller.delete(id);
+		return Response.ok("Cliente Excluido").build();
+		
+	}
+	
+	@DELETE
+	@Path("/deleteItemOrder/{orderId}/{productId}")
+	public Response deleteItemOrder (@PathParam("orderId") int orderId, @PathParam("productId") int productId){
+		this.controllerItem.deleteItemOrder(orderId, productId);
 		return Response.ok("Cliente Excluido").build();
 		
 	}

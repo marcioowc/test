@@ -15,5 +15,5 @@ public interface CRUDService <E, ID>{
 	List<E> findAll();
 	
 	E findForDelete(ID id);
-	
+
 }

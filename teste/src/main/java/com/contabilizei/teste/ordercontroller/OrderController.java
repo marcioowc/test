@@ -9,7 +9,7 @@ import com.contabilizei.teste.order.model.Order;
 public class OrderController {
 	
 	OrderDAO dao = new OrderDAOPersistence(Order.class);
-	
+		
 	public Order findById(Integer id){
 		return dao.findById(id);
 	}

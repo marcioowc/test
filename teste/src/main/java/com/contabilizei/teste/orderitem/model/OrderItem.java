@@ -29,7 +29,7 @@ public class OrderItem{
 	private Integer productId;
 	
 	@JsonBackReference	
-	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL)    	
+	@ManyToOne(fetch=FetchType.LAZY)    	
 	@JoinColumn(name="id_pedido",insertable=false,updatable=false)
 	private Order order;
 	
