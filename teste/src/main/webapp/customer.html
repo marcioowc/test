@@ -53,9 +53,13 @@
 			</div>
 		</fieldset>
 	</div>
+	<br>
+	<form method="link" action="index.html">
+		<input type="submit" value="Voltar">
+	</form>
 	<script type="text/javascript">
 		var myapp = angular.module('myapp', []);
-		myapp.controller('customerController', function($scope, $http){
+			myapp.controller('customerController', function($scope, $http){
 			$scope.base_url = 'http://localhost:8080/teste/rest/customers/';
 			$http.get($scope.base_url + 'getAllCustomers').success(function(response){
 				$scope.result = response.data;

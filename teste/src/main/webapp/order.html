@@ -2,16 +2,18 @@
 <html ng-app="myapp">
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="js/lib/bootstrap/dist/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="js/lib/bootstrap/dist/css/bootstrap-theme.min.css">
+<title>Pedido</title>
+<link rel="stylesheet" type="text/css"
+	href="js/lib/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css"
+	href="js/lib/bootstrap/dist/css/bootstrap-theme.min.css">
 <script type="text/javascript" src="js/lib/angular/angular.min.js"></script>
 </head>
 <body ng-controller="orderController">
 	<div id="dvTable" all>
-	
-	<legend>Pedido</legend>
-	<br>
+
+		<legend>Pedido</legend>
+		<br>
 		<table class="table">
 			<tr>
 				<th>ID</th>
@@ -25,87 +27,118 @@
 				<td>{{order.customer.name}}</td>
 				<td>{{order.date}}</td>
 				<td>{{order.amount}}</td>
-				<td>
-					<a href="#" ng-click="del(order.id)">Delete</a>
-					<a href="#" ng-click="edit(order)">Edit</a>
-				</td>
+				<td><a href="#" ng-click="del(order.id)">Delete</a> <a href="#"
+					ng-click="edit(order)">Edit</a></td>
 			</tr>
 		</table>
 	</div>
-	<br/>
+	<br />
 	<div id="dvInformation">
 		<fieldset>
 			<legend>Informações do Pedido</legend>
 			<div class="fomr-group col-sm-4">
 				<label class="control-label" for="tiClient">Cliente</label>
-				<div ng-controller="informController">
-					<select name="" id="tiClient" ng-model="customer_selected" ng-options="customer.name for customer in customers track by customer.id" class="form-control">
+				<div ng-controller="customerController">
+					<select name="" id="tiClient" ng-model="customer_selected"
+						ng-options="customer.name for customer in customers track by customer.id"
+						class="form-control" ng-change="changedValue(customer_selected)">
 						<option value="">Selecione um Cliente</option>
 					</select>
 				</div>
-				
-				<br>
-				
-				<label class="control-label" for="tiDate">Data</label>
-				<input id="tiDate" type="text" ng-model="order.date" class="form-control">
-				
-				<br>
-				
-				<label class="control-label" for="tiAmount">Total</label>
-				<input id="tiAmount" type="text" ng-model="order.amount" disabled class="form-control">
-				
-				<br>
-				
-				<td>
-					<input type="button" value="Adicionar" ng-click="add()">
+
+				<br> <label class="control-label" for="tiDate">Data</label> <input
+					id="tiDate" type="text" ng-model="order.date" class="form-control">
+
+				<br> <label class="control-label" for="tiAmount">Total</label>
+				<input id="tiAmount" type="text" ng-model="order.amount" disabled
+					class="form-control"> <br>
+
+				<td><input type="button" value="Adicionar" ng-click="add()">
 					<input type="button" value="Atualizar" ng-click="update()">
 				</td>
 			</div>
 		</fieldset>
 	</div>
-	<br><br>
-	<div id="dvTable" all>
+	<br>
+	<br>
+	<div id="dvTableItem" all style="display: none;">
 		<table class="table">
 			<tr>
-				<th>Pedido</th>
 				<th>Produto</th>
-				<th>Preçco</th>
+				<th>Preço</th>
 				<th>Quantidade</th>
 				<th></th>
 			</tr>
 			<tr ng-repeat="orderItem in itens">
-				<td>{{orderItem.orderId}}</td>
 				<td>{{orderItem.product.name}}</td>
 				<td>{{orderItem.product.price}}</td>
 				<td>{{orderItem.quantity}}</td>
-				<td>
-					<a href="#" ng-click="del(order.id)">Delete</a>
+				<td><a href="#" ng-click="deleteItem(orderItem.productId)">Delete</a>
 				</td>
 			</tr>
 		</table>
 	</div>
-	<br/>
-	<div id="dvOrderItem">
+	<br />
+	<div id="dvOrderItem" style="display: none;">
 		<fieldset>
 			<legend>Informações dos Itens</legend>
 			<div class="fomr-group col-sm-4">
-				<label class="control-label" for="tiAmount">Quantidade</label>
-				<input id="tiAmount" type="text" ng-model="order.orderitem.quantity" class="form-control">
+				<label class="control-label" for="tiProduct">Produto</label>
+				<div ng-controller="productController">
+					<select name="" id="tiProduct" ng-model="product_selected"
+						ng-options="product.name for product in products track by product.id"
+						class="form-control" ng-change="changedValue(product_selected)">
+						<option value="">Selecione um Cliente</option>
+					</select>
+				</div>
+
+				<br> <label class="control-label" for="tiQuantity">Quantidade</label>
+				<input id="tiQuantity" type="text" ng-model="orderItem.quantity"
+					class="form-control"> <br>
+
+				<td><input type="button" value="Adicionar"
+					ng-click="updateItem()"></td>
+
 			</div>
 		</fieldset>
 	</div>
-		
+
+	<form method="link" action="index.html">
+		<input type="submit" value="Voltar">
+	</form>
+
 	<script type="text/javascript">
 
 			var myapp = angular.module('myapp', []);
+			var currentCustomer = 0;
+			var currentProduct = 0;
+			var amount = 0;
+			var products = [];
 
-			myapp.controller('informController',function($scope, $http){
+			myapp.controller('productController',function($scope, $http){
+				$scope.base_url = 'http://localhost:8080/teste/rest/products/';
+				$http.get($scope.base_url + 'getAllProducts').success(function(response){
+					$scope.products = response.data;
+					products = response.data;
+				});
+
+				$scope.changedValue = function(item) {
+					currentProduct = item.id;
+				}
+				
+			});
+
+			myapp.controller('customerController',function($scope, $http){
 				$scope.base_url = 'http://localhost:8080/teste/rest/customers/';
 				$http.get($scope.base_url + 'getAllCustomers').success(function(response){
 					$scope.customers = response.data;
 				});
+
+				$scope.changedValue = function(item) {
+					currentCustomer = item.id;
+				}  
+				
 			});
-	
 		
 			myapp.controller('orderController', function($scope, $http){
 				$scope.base_url = 'http://localhost:8080/teste/rest/orders/';
@@ -115,7 +148,7 @@
 			});
 
 			$scope.add = function(){
-				//$scope.order.customerId = $scope.customer_selected;
+				$scope.order.customerId = currentCustomer;
 				$http.post($scope.base_url, $scope.order).success(function(response){
 					$http.get($scope.base_url + 'getAllOrders').success(function(response){
 						$scope.result = response.data;
@@ -135,6 +168,9 @@
 			};
 
 			$scope.edit = function(order){
+				document.getElementById('dvTableItem').style.display = 'inline';
+				document.getElementById('dvOrderItem').style.display = 'inline';
+				document.getElementById('tiClient').disabled = 'true';
 				$scope.order = order;
 				$scope.customer_selected = $scope.order.customer;
 				$scope.itens = order.orderItem;
@@ -147,6 +183,61 @@
 					});
 				});
 			};
+
+			$scope.updateItem = function(){
+				amount = 0;
+				$scope.order.orderItem.push(
+						{
+							orderId:$scope.order.id,
+							productId:currentProduct,
+							quantity:$scope.orderItem.quantity,
+						});
+
+				for(i in $scope.order.orderItem){
+					for(iP in products){
+						if(products[iP].id == $scope.order.orderItem[i].productId){
+							amount += + ($scope.order.orderItem[i].quantity * products[iP].price);
+						}
+					}
+				}
+
+				$scope.order.amount = amount;
+				
+				$http.put($scope.base_url, $scope.order).success(function(response){
+					$http.get($scope.base_url + 'getAllOrders').success(function(response){
+						$scope.result = response.data;
+					});
+				});
+
+				window.location.assign("order.html");
+			};
+
+			$scope.deleteItem = function(id){
+				amount = 0;
+
+				for(i in $scope.order.orderItem){
+					if($scope.order.orderItem[i].productId == id){
+						$scope.order.orderItem.splice(id - 1,1); 
+					}
+				}
+
+				for(i in $scope.order.orderItem){
+					for(iP in products){
+						if(products[iP].id == $scope.order.orderItem[i].productId){
+							amount += + ($scope.order.orderItem[i].quantity * products[iP].price);
+						}
+					}
+				}
+
+				$scope.order.amount = amount;
+				
+				$http.put($scope.base_url, $scope.order).success(function(response){
+					$http.get($scope.base_url + 'getAllOrders').success(function(response){
+						$scope.result = response.data;
+					});
+				});
+			};
+
 		});
 	</script>
 

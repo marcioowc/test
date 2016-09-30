@@ -2,13 +2,14 @@
 <html ng-app="myapp">
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Produto</title>
+<link rel="stylesheet" type="text/css" href="js/lib/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="js/lib/bootstrap/dist/css/bootstrap-theme.min.css">
 <script type="text/javascript" src="js/lib/angular/angular.min.js"></script>
-<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body ng-controller="productController">
-	<div id="dvTable">
-		<table id="table-1" border="1" cellpadding="2" cellspacing="2">
+	<div id="dvTable" all>
+		<table class="table">
 			<tr>
 				<th>ID</th>
 				<th>Nome</th>
@@ -30,25 +31,29 @@
 	<div id="dvInformation">
 		<fieldset>
 			<legend>Informações do Produto</legend>
-			<table id="table-1" cellpadding="2" cellspacing="2">
-				<tr>
-					<td>Nome</td>
-					<td><input type="text" ng-model="product.name"></td>
-				</tr>
-				<tr>
-					<td>Preço</td>
-					<td><input type="text" ng-model="product.price"></td>
-				</tr>
-				<tr>
-					<td>&nbsp;</td>
-					<td>
-						<input type="button" value="Adicionar" ng-click="add()">
-						<input type="button" value="Atualizar" ng-click="update()">
-					</td>
-				</tr>
-			</table>
+			<div class="fomr-group col-sm-4">
+			
+			<label class="control-label" for="tiName">Nome</label>
+			<input id="tiName" type="text" ng-model="product.name" class="form-control">
+			
+			<br>
+			
+			<label class="control-label" for="tiPrice">Preço</label>
+			<input id="tiPrice" type="text" ng-model="product.price" class="form-control">
+			
+			<br>
+			
+			<td>
+				<input type="button" value="Adicionar" ng-click="add()">
+				<input type="button" value="Atualizar" ng-click="update()">
+			</td>
+			
 		</fieldset>
 	</div>
+	<br>
+	<form method="link" action="index.html">
+		<input type="submit" value="Voltar">
+	</form>
 	<script type="text/javascript">
 		var myapp = angular.module('myapp', []);
 		myapp.controller('productController', function($scope, $http){
